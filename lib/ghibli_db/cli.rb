@@ -28,6 +28,19 @@ class GhibliDb::CLI
 
   def main_pick
     GhibliDb::API.get_films
+    input = gets.strip
+    if input == "1"
+      list_films
+    end
+  end
+
+  def list_films
+    GhibliDb::Film.all.each.with_index(1) do |film, index|
+      puts "#{index}. #{film.title}"
+      puts "-----------------------------------------------------------------------------------"
+    end
+    puts ""
+    puts "please enter the number corresponding to a movie you would like more information on"
   end
 
 end
