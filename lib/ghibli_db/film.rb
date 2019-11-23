@@ -1,0 +1,3 @@
+class GhibliDb::Film
+
+end
