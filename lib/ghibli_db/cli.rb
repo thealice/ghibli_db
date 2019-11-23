@@ -29,6 +29,8 @@ class GhibliDb::CLI
   # end
 
   def options
+    puts ""
+    puts "please enter the number corresponding to a movie you would like more information on"
     input = gets.strip
   end
 
@@ -41,12 +43,10 @@ class GhibliDb::CLI
   # end
 
   def list_films
-    GhibliDb::API.get_films
+    GhibliDb::Film.make_films
     GhibliDb::Film.all.each.with_index(1) do |film, index|
       puts "#{index}. #{film.title}"
     end
-    puts ""
-    puts "please enter the number corresponding to a movie you would like more information on"
   end
 
 end

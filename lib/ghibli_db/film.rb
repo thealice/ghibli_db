@@ -5,7 +5,7 @@ class GhibliDb::Film
 
 @@all = []
 
-def initialize(attributes) #True? this will work for single films as well as collections of movies based on structure of the film array. ??
+def initialize(attributes)
   attributes.each do |key, value| # this will iterate and assign attributes to a new Film based the attr_accesors set above
     self.send("#{key}=", value) if self.respond_to?(key) #checks to see if that object has a method that it can call for that key (a getter/reader method). if there is no reader for that key, it will not execute the setter for that.
   end
@@ -19,9 +19,16 @@ def self.all
   @@all
 end
 
-def self.create_from_collection(collection)
-  new_film = GhibliDb::Film.new(collection)
-  new_film.save
+def self.create_from_collection(array_of_hashes)
+  array_of_hashes.each do |film_hash|
+    film_object = self.new(film_hash)
+    film_object.save
+  end
+end
+
+def self.make_films
+  results = GhibliDb::API.get_films
+  self.create_from_collection(results)
 end
 
 # def self.find_by_id(title)
