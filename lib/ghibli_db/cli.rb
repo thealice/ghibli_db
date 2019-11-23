@@ -27,7 +27,7 @@ class GhibliDb::CLI
   end
 
   def main_pick
-    
+    GhibliDb::API.get_films
   end
 
 end
