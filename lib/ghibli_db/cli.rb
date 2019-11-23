@@ -30,8 +30,14 @@ class GhibliDb::CLI
 
   def options
     puts ""
-    puts "please enter the number corresponding to a movie you would like more information on"
-    input = gets.strip
+    puts "please enter the number corresponding to a movie you would like more information on:"
+    input = gets.strip.to_i #this won't work if user types words and not a number
+    input = GhibliDb::Film.all[input-1]
+    puts "------------------------------------------------------"
+    puts "'#{input.title}' was released in #{input.release_date}"
+    puts "------------------------------------------------------"
+    # need to figure out how to limit the line length of the descrpitions
+    puts "#{input.description}"
   end
 
   # def main_pick
@@ -42,7 +48,7 @@ class GhibliDb::CLI
   #   end
   # end
 
-  def list_films
+  def list_films #consider sorting this list
     GhibliDb::Film.make_films
     GhibliDb::Film.all.each.with_index(1) do |film, index|
       puts "#{index}. #{film.title}"
