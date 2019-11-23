@@ -6,7 +6,7 @@ class GhibliDb::API
     results = HTTParty.get("#{BASE_URL}/films")
     results = results.parsed_response
     results.each do |film_hash|
-      binding.pry
+      GhibliDb::Film.create_from_collection(film_hash)
     end
   end
 
