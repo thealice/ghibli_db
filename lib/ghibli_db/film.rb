@@ -8,6 +8,7 @@ class GhibliDb::Film
 def initialize(attributes)
   attributes.each do |key, value| # this will iterate and assign attributes to a new Film based the attr_accesors set above
     self.send("#{key}=", value) if self.respond_to?(key) #checks to see if that object has a method that it can call for that key (a getter/reader method). if there is no reader for that key, it will not execute the setter for that.
+    # Figure out how to add species and locations correctly
   end
 end
 

@@ -38,6 +38,8 @@ class GhibliDb::CLI
     puts "------------------------------------------------------"
     # need to figure out how to limit the line length of the descrpitions
     puts "#{input.description}"
+    # puts "Highlighted species in this film include:"
+    # iterate through the species links associated with this movie, make that species using the API class
   end
 
   # def main_pick
