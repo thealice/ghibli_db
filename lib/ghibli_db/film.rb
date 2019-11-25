@@ -1,7 +1,7 @@
 class GhibliDb::Film
   #what parts of this could come from a module if we decide to make a species class?
 
-  attr_accessor :id, :title, :description, :release_date, :species, :locations
+  attr_accessor :id, :title, :description, :release_date, :species, :locations, :people
 
 @@all = []
 
