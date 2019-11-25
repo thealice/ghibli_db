@@ -5,7 +5,6 @@ class GhibliDb::API
   def self.get_films
     results = HTTParty.get("#{BASE_URL}/films")
     results = results.parsed_response
-    binding.pry
   end
 
   def get_people
@@ -13,10 +12,9 @@ class GhibliDb::API
     results = results.parsed_response
   end
 
-  def get_person_by_url(url)
-    results = HTTParty.get(url)
-    results = results.parsed_response
-  end
+  # def get_people_by_film_id(film_id)
+  #   film_results = HTTParty.get("#{BASE_URL}/films/#{film_id}")
+  # end
 
   # def self.get_species #do i want to change this so it gets species from each film and then updates the species array to species objects or an array of species for each movie?
   #   #or do i want a get_species from individual movie based on movie id?
@@ -29,10 +27,6 @@ class GhibliDb::API
   #     # GhibliDb::Species.create_from_collection(species_hash) #add results to Film.all?
   #   end
   # end
-
-  def self.get_film_by_id(id)
-
-  end
 
 
 end

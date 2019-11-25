@@ -17,17 +17,37 @@ class GhibliDb::Person
     @@all
   end
 
-  def self.create_from_collection(array_of_hashes)
-    array_of_hashes.each do |person_hash|
-      person_object = self.new(person_hash)
+  def self.create_from_collection(array_of_urls)
+    array_of_urls.each do |url|
+      person_object = self.create_by_url(url)
       person_object.save
     end
   end
 
-  def self.make_people
-    results = GhibliDb::API.get_people
-    self.create_from_collection(results)
+  def self.find_by_url(url)
+    self.all.detect {|object| object.url == url}
   end
+
+  def self.create_by_url(url)
+    self.new(url).tap do |object|
+        object.save
+      end
+  end
+
+  def self.find_or_create_by_url(url)
+    find_by_url(url) || self.create_by_url(url)
+  end
+
+  # def self.make_people
+  #   results = GhibliDb::API.get_people
+  #   self.create_from_collection(results)
+  # end
+######?
+  # def films=(url_collection)
+  #   url_collection.each do |url|
+  #     GhibliDb::Film.find_or_create_by_url(url)
+  #   end
+  # end
 
 
   # def self.films=(film_urls_array)
