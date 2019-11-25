@@ -7,6 +7,7 @@ class GhibliDb::Person
     attributes.each do |key, value|
       self.send("#{key}=", value) if self.respond_to?(key)
     end
+    #######if films or species end up being https://ghibliapi.herokuapp.com/films/ or https://ghibliapi.herokuapp.com/species/ then replace with "n/a"
   end
 
   def save
