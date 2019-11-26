@@ -37,7 +37,6 @@ class GhibliDb::Person
   end
 
   def self.find_or_create_by_url(url)
-    binding.pry
     find_by_url(url) || self.create_by_url(url)
   end
 

@@ -38,11 +38,13 @@ class GhibliDb::Film
   def add_people
     if self.people
       people_array = self.people
-      people_array.each do |url|
+      people_array.map do |url|
         person_object = GhibliDb::Person.find_or_create_by_url(url)
-        binding.pry
-        person_object.films
+        person_object.films << self
+              binding.pry
       end
+      self.people = people_array
+
     end
     #def add_song(song)
     #   song.artist = self unless song.artist
