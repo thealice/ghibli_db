@@ -7,12 +7,12 @@ class GhibliDb::API
     results = results.parsed_response
   end
 
-  def get_people
+  def self.get_people
     results = HTTParty.get("#{BASE_URL}/people")
     results = results.parsed_response
   end
 
-  def get_person_by_url(url)
+  def self.get_person_by_url(url)
     results = HTTParty.get(url)
     results = results.parsed_response
   end
