@@ -30,12 +30,14 @@ class GhibliDb::Person
   end
 
   def self.create_by_url(url)
-    self.new(url).tap do |object|
+    person_hash = GhibliDb::API.get_person_by_url(url)
+    self.new(person_hash).tap do |object|
         object.save
       end
   end
 
   def self.find_or_create_by_url(url)
+    binding.pry
     find_by_url(url) || self.create_by_url(url)
   end
 
