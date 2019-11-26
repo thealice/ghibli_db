@@ -38,8 +38,10 @@ class GhibliDb::CLI
     puts "------------------------------------------------------"
     # need to figure out how to limit the line length of the descrpitions
     puts "#{input.description}"
-    puts "Highlighted character(s) in this film:"
-    puts "#{input.people}"
+    if "#{input.people}"
+      puts "Highlighted character(s) in this film:"
+      puts "#{input.people}"
+    end
     # iterate through the species links associated with this movie, make that species using the API class
   end
 

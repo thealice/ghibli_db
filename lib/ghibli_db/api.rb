@@ -12,6 +12,11 @@ class GhibliDb::API
     results = results.parsed_response
   end
 
+  def get_person_by_url(url)
+    results = HTTParty.get(url)
+    results = results.parsed_response
+  end
+
   # def get_people_by_film_id(film_id)
   #   film_results = HTTParty.get("#{BASE_URL}/films/#{film_id}")
   # end
