@@ -38,21 +38,13 @@ class GhibliDb::Film
   def add_people
     if self.people
       people_array = self.people
-      people_array.map do |url|
-        person_object = GhibliDb::Person.find_or_create_by_url(url)
-        person_object.films << self
-              binding.pry
+      people_array =
+      people_array.map do |person|
+        person = GhibliDb::Person.find_or_create_by_url(person) # updates person from url to person object
       end
+      # people_array.map.with_index {|person,index| person.films[index] = self}
       self.people = people_array
-
     end
-    #def add_song(song)
-    #   song.artist = self unless song.artist
-    #   self.songs << song unless @songs.include?(song)
-    #end
-    # self.people = self.people.map do |person_url|
-    #   person_object.films=() GhibliDb::Person.films=
-    # end
   end
 ## move to findable module?
   def self.find_by_url(url)
