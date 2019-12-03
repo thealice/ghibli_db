@@ -1,4 +1,5 @@
 require "table_print"
+require "pastel"
 require "httparty"
 require "pry"
 require_relative "ghibli_db/version"
