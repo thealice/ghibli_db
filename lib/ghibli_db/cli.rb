@@ -2,13 +2,14 @@ class GhibliDb::CLI
 
   def start
     welcome
+    GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten
     list_films
     options
   end
 
   def welcome
     puts "Welcome to the Studio Ghibli Database!"
-    puts "--------------------------------------"
+    puts "Please wait while I fetch the films..."
   end
 
   # def menu
@@ -30,17 +31,23 @@ class GhibliDb::CLI
 
   def options
     puts ""
-    puts "please enter the number corresponding to a movie you would like more information on:"
+    puts "Please enter the number corresponding to a movie you would like more information on:"
     input = gets.strip.to_i #this won't work if user types words and not a number
     input = GhibliDb::Film.all_sorted[input-1]
-    puts "------------------------------------------------------"
-    puts "'#{input.title}' was released in #{input.release_date}"
-    puts "------------------------------------------------------"
-    # need to figure out how to limit the line length of the descrpitions
+    tp input, "title", "species", "release_date"
     puts "#{input.description}"
+    # puts "------------------------------------------------------"
+    # puts "'#{input.title}' was released in #{input.release_date}"
+    # puts "------------------------------------------------------"
+    # # need to figure out how to limit the line length of the descrpitions
+    # puts "#{input.description}"
     if input.people
       puts "Highlighted character(s) in this film:"
       puts input.people
+    end
+    if input.species
+      puts "Species featured in this film:"
+      puts input.species
     end
     # iterate through the species links associated with this movie, make that species using the API class
   end
@@ -53,12 +60,16 @@ class GhibliDb::CLI
   #   end
   # end
 
-  def list_films #consider sorting this list
-    GhibliDb::Film.make_films
+  def list_films
+    puts "---|----------------------------------"
+    GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
+      puts "#{index}  | #{film.title}" if index < 10
+      puts "#{index} | #{film.title}" if index > 9
+    end
     # GhibliDb::Film.all do |film|
     #   puts "#{film.num}. #{film.title}"
     # end
-    tp GhibliDb::Film.all_sorted, "num", "title"
+    # tp GhibliDb::Film.all_sorted, "num", "title"
     # GhibliDb::Film.all.each.with_index(1) do |film, index|
     #   puts "#{index}. #{film.title}"
     # end

@@ -41,6 +41,10 @@ class GhibliDb::Film
     @@all
   end
 
+  def self.clear
+    @@all = []
+  end
+
   def self.all_sorted
     @@all.sort_by { |film| film.sortable_title.downcase }
   end
@@ -61,7 +65,7 @@ class GhibliDb::Film
   def self.find_by_id(id)
     self.all.detect {|object| object.id == id}
   end
-  
+
   def self.find_by_url(url)
     self.all.detect {|object| object.url == url}
   end
