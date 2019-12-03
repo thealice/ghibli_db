@@ -1,6 +1,6 @@
+require "table_print"
 require "httparty"
 require "pry"
-require "table_print"
 require_relative "ghibli_db/version"
 require_relative 'ghibli_db/film'
 require_relative 'ghibli_db/person'

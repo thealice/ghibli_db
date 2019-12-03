@@ -89,9 +89,13 @@ class GhibliDb::CLI
 
   def list_films #consider sorting this list
     GhibliDb::Film.make_films
-    GhibliDb::Film.all.each.with_index(1) do |film, index|
-      puts "#{index}. #{film.title}"
-    end
+    # GhibliDb::Film.all do |film|
+    #   puts "#{film.num}. #{film.title}"
+    # end
+    tp GhibliDb::Film.all_sorted, "num", "title"
+    # GhibliDb::Film.all.each.with_index(1) do |film, index|
+    #   puts "#{index}. #{film.title}"
+    # end
   end
 
 end

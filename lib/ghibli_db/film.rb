@@ -1,7 +1,7 @@
 class GhibliDb::Film
   #what parts of this could come from a module if we decide to make a species class?
 
-  attr_accessor :id, :title, :description, :release_date, :url, :locations, :people, :species
+  attr_accessor :id, :title, :description, :release_date, :url, :locations, :people, :species, :num
 
   @@all = []
 
@@ -12,15 +12,37 @@ class GhibliDb::Film
     @people = nil if self.people == ["https://ghibliapi.herokuapp.com/people/"]
     @locations = nil if self.locations == ["https://ghibliapi.herokuapp.com/locations/"]
     @species = nil if self.species == ["https://ghibliapi.herokuapp.com/species/"]
+    @num = nil
     self.add_people
+    self.add_list_num
   end
 
   def save
-    @@all << self
+    @@all << self unless @@all.include?(self)
+  end
+
+  def add_people
+    if self.people
+      people_array = self.people
+      people_array =
+      people_array.map do |person|
+        person = GhibliDb::Person.find_or_create_by_url(person) # updates person from url to person object
+      end
+      # people_array.map.with_index {|person,index| person.films[index] = self}
+      self.people = people_array
+    end
+  end
+
+  def sortable_title
+    self.title.sub(/^(the|a|an)\s+/i, "")
   end
 
   def self.all
     @@all
+  end
+
+  def self.all_sorted
+    @@all.sort_by { |film| film.sortable_title.downcase }
   end
 
   def self.create_from_collection(array_of_hashes)
@@ -35,17 +57,6 @@ class GhibliDb::Film
     self.create_from_collection(results)
   end
 
-  def add_people
-    if self.people
-      people_array = self.people
-      people_array =
-      people_array.map do |person|
-        person = GhibliDb::Person.find_or_create_by_url(person) # updates person from url to person object
-      end
-      # people_array.map.with_index {|person,index| person.films[index] = self}
-      self.people = people_array
-    end
-  end
 ## move to findable module?
   def self.find_by_url(url)
     self.all.detect {|object| object.url == url}
@@ -60,5 +71,15 @@ class GhibliDb::Film
   def self.find_or_create_by_url(url)
     find_by_url(url) || self.create_by_url(url)
   end
+# end findables
+
+  def add_list_num
+    GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
+      film.num = index
+      self.save
+    end
+  end
+
+
 
 end
