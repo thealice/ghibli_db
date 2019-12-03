@@ -54,7 +54,7 @@ class GhibliDb::CLI
       puts pastel.yellow("------------------------------")
       puts "Species featured in this film:"
       puts pastel.yellow("------------------------------")
-      puts input.species
+      input.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name} - #{species.classification}"}
     end
     # iterate through the species links associated with this movie, make that species using the API class
   end

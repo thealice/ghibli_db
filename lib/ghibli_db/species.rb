@@ -21,7 +21,7 @@ class GhibliDb::Species
   def self.create_from_collection(array_of_urls)
     array_of_urls.each do |url|
       object = self.create_by_url(url)
-      bject.save
+      object.save
     end
   end
 
@@ -40,21 +40,4 @@ class GhibliDb::Species
     find_by_url(url) || self.create_by_url(url)
   end
 
-  # def self.make_people
-  #   results = GhibliDb::API.get_people
-  #   self.create_from_collection(results)
-  # end
-######?
-  # def films=(url_collection)
-  #   url_collection.each do |url|
-  #     GhibliDb::Film.find_or_create_by_url(url)
-  #   end
-  # end
-
-
-  # def self.films=(film_urls_array)
-  #   film_objects_array = films_urls_array.each do |url|
-  #     binding.pry
-  #   end
-  # end
 end

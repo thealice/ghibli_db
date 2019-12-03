@@ -1,7 +1,7 @@
 class GhibliDb::Film
   #what parts of this could come from a module if we decide to make a species class?
 
-  attr_accessor :id, :title, :description, :release_date, :url, :locations, :people, :species, :num
+  attr_accessor :id, :title, :description, :release_date, :url, :locations, :people, :species, :director
 
   @@all = []
 
@@ -32,6 +32,17 @@ class GhibliDb::Film
       end
       # people_array.map.with_index {|person,index| person.films[index] = self}
       self.people = people_array
+    end
+  end
+
+  def add_species
+    if self.species
+      species_array = self.species
+      species_array =
+      species_array.map do |species|
+        species = GhibliDb::Species.find_or_create_by_url(species) # updates species from url to person object
+      end
+      self.species = species_array
     end
   end
 
