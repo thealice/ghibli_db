@@ -1,5 +1,6 @@
 # GhibliDb
 ![8-bit Studio Ghibli by Richard J. Evans](/images/8-bit-logo.png)
+
 Image Source: [Richard J. Evans](https://www.behance.net/RichEvans)
 
 ## Installation
