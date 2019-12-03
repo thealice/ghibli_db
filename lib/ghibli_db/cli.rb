@@ -9,7 +9,7 @@ class GhibliDb::CLI
 
   def welcome
     puts "Welcome to the Studio Ghibli Database!"
-    puts "Please wait while I fetch the films..."
+    puts "Please wait a few moments while I fetch the films..."
   end
 
   # def menu
@@ -30,22 +30,24 @@ class GhibliDb::CLI
   # end
 
   def options
-    puts ""
-    puts "Please enter the number corresponding to a movie you would like more information on:"
+    line_break
+    puts "Enter the number of the movie you would like more information on:"
     input = gets.strip.to_i #this won't work if user types words and not a number
     input = GhibliDb::Film.all_sorted[input-1]
-    tp input, "title", "species", "release_date"
+    # tp input, "title", "species", "release_date"
+    line_break
+    puts "------------------------------------------------------"
+    puts "'#{input.title}' was released in #{input.release_date}"
+    puts "------------------------------------------------------"
     puts "#{input.description}"
-    # puts "------------------------------------------------------"
-    # puts "'#{input.title}' was released in #{input.release_date}"
-    # puts "------------------------------------------------------"
     # # need to figure out how to limit the line length of the descrpitions
-    # puts "#{input.description}"
     if input.people
+      line_break
       puts "Highlighted character(s) in this film:"
       puts input.people
     end
     if input.species
+      line_break
       puts "Species featured in this film:"
       puts input.species
     end
@@ -65,6 +67,7 @@ class GhibliDb::CLI
     GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
       puts "#{index}  | #{film.title}" if index < 10
       puts "#{index} | #{film.title}" if index > 9
+      sleep(0.3)
     end
     # GhibliDb::Film.all do |film|
     #   puts "#{film.num}. #{film.title}"
@@ -73,6 +76,10 @@ class GhibliDb::CLI
     # GhibliDb::Film.all.each.with_index(1) do |film, index|
     #   puts "#{index}. #{film.title}"
     # end
+  end
+
+  def line_break
+    puts ""
   end
 
 end
