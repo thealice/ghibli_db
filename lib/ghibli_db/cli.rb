@@ -38,18 +38,22 @@ class GhibliDb::CLI
     input = GhibliDb::Film.all_sorted[input-1]
     # tp input, "title", "species", "release_date"
     puts pastel.yellow("------------------------------------------------------")
-    puts "'#{input.title}' was released in #{input.release_date}"
+    puts pastel.cyan("#{input.title}") + " was released in" + pastel.cyan(" #{input.release_date}")
     puts pastel.yellow("------------------------------------------------------")
     puts "#{input.description}"
     # # need to figure out how to limit the line length of the descrpitions
     if input.people
       line_break
+      puts pastel.yellow("--------------------------------------")
       puts "Highlighted character(s) in this film:"
-      puts input.people
+      puts pastel.yellow("--------------------------------------")
+      input.people.each.with_index(1) {|person, index| puts "#{index}. #{person.name}"}
     end
     if input.species
       line_break
+      puts pastel.yellow("------------------------------")
       puts "Species featured in this film:"
+      puts pastel.yellow("------------------------------")
       puts input.species
     end
     # iterate through the species links associated with this movie, make that species using the API class
@@ -68,7 +72,7 @@ class GhibliDb::CLI
     GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
       puts "#{index}  | #{film.title}" if index < 10
       puts "#{index} | #{film.title}" if index > 9
-      sleep(0.3)
+      sleep(0.25)
     end
     # GhibliDb::Film.all do |film|
     #   puts "#{film.num}. #{film.title}"
