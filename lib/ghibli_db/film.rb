@@ -15,7 +15,8 @@ class GhibliDb::Film
     @species = nil if self.species == ["https://ghibliapi.herokuapp.com/species/"]
     @num = nil
     self.add_people
-    self.add_list_num
+    self.add_species
+    # self.add_list_num
   end
 
   def save
@@ -33,6 +34,14 @@ class GhibliDb::Film
       self.people = people_array
     end
   end
+
+
+  # def add_list_num
+  #   GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
+  #     film.num = index
+  #     self.save
+  #   end
+  # end
 
   def sortable_title
     self.title.sub(/^(the|a|an)\s+/i, "")
@@ -81,13 +90,6 @@ class GhibliDb::Film
     find_by_url(url) || self.create_by_url(url)
   end
 # end findables
-
-  def add_list_num
-    GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
-      film.num = index
-      self.save
-    end
-  end
 
 
 

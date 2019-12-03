@@ -1,5 +1,5 @@
-class GhibliDb::Person
-  attr_accessor :id, :name, :gender, :age, :eye_color, :hair_color, :url, :films, :species
+class GhibliDb::Species
+  attr_accessor :id, :name, :classification, :eye_colors, :hair_colors, :url, :films, :people
 
   @@all = []
 
@@ -7,7 +7,7 @@ class GhibliDb::Person
     attributes.each do |key, value|
       self.send("#{key}=", value) if self.respond_to?(key)
     end
-    #######if films or species end up being https://ghibliapi.herokuapp.com/films/ or https://ghibliapi.herokuapp.com/species/ then replace with "n/a"
+    #######if species end up being https://ghibliapi.herokuapp.com/species/ then replace with "n/a"
   end
 
   def save
@@ -21,7 +21,7 @@ class GhibliDb::Person
   def self.create_from_collection(array_of_urls)
     array_of_urls.each do |url|
       object = self.create_by_url(url)
-      object.save
+      bject.save
     end
   end
 
