@@ -8,8 +8,9 @@ class GhibliDb::CLI
   end
 
   def welcome
-    puts "Welcome to the Studio Ghibli Database!"
-    puts "Please wait a few moments while I fetch the films..."
+    pastel = Pastel.new
+    puts pastel.cyan("Welcome to the Studio Ghibli Database!")
+    puts pastel.red("Please wait a few moments while I fetch the films...")
   end
 
   # def menu
@@ -31,14 +32,14 @@ class GhibliDb::CLI
 
   def options
     line_break
-    puts "Enter the number of the movie you would like more information on:"
+    pastel = Pastel.new
+    puts pastel.red("Enter the number of the movie you would like more information on:")
     input = gets.strip.to_i #this won't work if user types words and not a number
     input = GhibliDb::Film.all_sorted[input-1]
     # tp input, "title", "species", "release_date"
-    line_break
-    puts "------------------------------------------------------"
+    puts pastel.yellow("------------------------------------------------------")
     puts "'#{input.title}' was released in #{input.release_date}"
-    puts "------------------------------------------------------"
+    puts pastel.yellow("------------------------------------------------------")
     puts "#{input.description}"
     # # need to figure out how to limit the line length of the descrpitions
     if input.people
