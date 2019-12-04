@@ -25,6 +25,10 @@ class GhibliDb::Person
     end
   end
 
+  def self.find_by_id(id)
+    self.all.detect {|object| object.id == id}
+  end
+
   def self.find_by_url(url)
     self.all.detect {|object| object.url == url}
   end
