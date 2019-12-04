@@ -3,7 +3,6 @@ class GhibliDb::CLI
   def start
     pastel
     welcome
-    GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten
     main_menu
   end
 
@@ -11,21 +10,17 @@ class GhibliDb::CLI
     puts pastel.yellow("    ----------------------------------------------------------------------")
     puts pastel.cyan("    Welcome to the Studio Ghibli Database!")
     puts pastel.yellow("    ----------------------------------------------------------------------")
-    sleep(1)
+    sleep(1.5)
     spirited_img
-    line_break
-    puts pastel.red("    Please take a deep breath and count to ten while I fetch the films...")
   end
 
   def main_menu
-    puts <<-DOC
-    ------------------------------------------------------------------
-    Choose an option number or type "exit" to exit the program:
-    ------------------------------------------------------------------
-    1. I would like to see a list of all the Studio Ghibli films
-    2. I would like to see a list of some characters from the films
-    ------------------------------------------------------------------
-    DOC
+    puts pastel.yellow("    ----------------------------------------------------------------------")
+    puts pastel.red("    Choose an option number or type 'exit' to exit the program:")
+    puts pastel.yellow("    ----------------------------------------------------------------------")
+    puts "    1. I would like to see a list of all the Studio Ghibli films"
+    puts "    2. I would like to see a list of some characters from the films"
+    puts pastel.yellow("    ----------------------------------------------------------------------")
     # 3. I would like a to see a list of species included in the films
     # 4. I would like to search the films by title
     # 5. I would like to search the films by species
@@ -39,7 +34,9 @@ class GhibliDb::CLI
   end
 
   def list_films
+    puts pastel.red("    Please take a deep breath and count to ten while I fetch the films...")
     line_break
+    GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten
     puts pastel.cyan("     #") + " | " + pastel.cyan("Title                            ")
     puts "    ---|----------------------------------"
     GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
@@ -51,6 +48,9 @@ class GhibliDb::CLI
   end
 
   def list_characters
+    puts pastel.red("    Please take a deep breath and count to ten while I fetch the characters...")
+    line_break
+    GhibliDb::Film.make_films ## Change this to Peope.make_people?
     puts pastel.cyan("     #") + " | " + pastel.cyan("Character                            ")
     puts "    ---|----------------------------------"
       GhibliDb::Person.all.each.with_index(1) do |person, index|
@@ -67,10 +67,10 @@ class GhibliDb::CLI
     input = gets.strip.to_i #this won't work if user types words and not a number
     input = GhibliDb::Film.all_sorted[input-1]
     # tp input, "title", "species", "release_date"
-    puts pastel.yellow("------------------------------------------------------")
-    puts pastel.cyan("#{input.title}") + " was released in" + pastel.cyan(" #{input.release_date}")
-    puts pastel.white("It was directed by") + pastel.cyan(" #{input.director}")
-    puts pastel.yellow("------------------------------------------------------")
+    puts pastel.yellow("--------------------------------------------------------------------------")
+    puts pastel.cyan("#{input.title}") + " was released in" + pastel.cyan(" #{input.release_date}.") + " It was directed by" + pastel.cyan(" #{input.director}.")
+    # puts pastel.white("It was directed by") + pastel.cyan(" #{input.director}")
+    puts pastel.yellow("--------------------------------------------------------------------------")
     puts "#{input.description}"
     # # need to figure out how to limit the line length of the descrpitions
     if input.people
