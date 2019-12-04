@@ -27,6 +27,7 @@ class GhibliDb::CLI
     # tp input, "title", "species", "release_date"
     puts pastel.yellow("------------------------------------------------------")
     puts pastel.cyan("#{input.title}") + " was released in" + pastel.cyan(" #{input.release_date}")
+    puts pastel.white("It was directed by") + pastel.cyan(" #{input.director}")
     puts pastel.yellow("------------------------------------------------------")
     puts "#{input.description}"
     # # need to figure out how to limit the line length of the descrpitions
