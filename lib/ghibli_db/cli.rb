@@ -46,7 +46,6 @@ class GhibliDb::CLI
       input.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name}"}
       line_break
     end
-    # iterate through the species links associated with this movie, make that species using the API class
   end
 
   def list_films
