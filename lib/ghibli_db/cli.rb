@@ -8,17 +8,19 @@ class GhibliDb::CLI
   end
 
   def welcome
-    pastel = Pastel.new
-    puts pastel.cyan("Welcome to the Studio Ghibli Database!")
+    pastel
+    puts pastel.yellow("    ----------------------------------------------------------------------")
+    puts pastel.cyan("    Welcome to the Studio Ghibli Database!")
+    puts pastel.yellow("    ----------------------------------------------------------------------")
     sleep(1)
     spirited_img
     line_break
-    puts pastel.red("Please wait a few moments while I fetch the films...")
+    puts pastel.red("    Please wait a few moments while I fetch the films...")
   end
 
   def options
     line_break
-    pastel = Pastel.new
+    pastel
     puts pastel.red("Enter the number of the movie you would like more information on:")
     input = gets.strip.to_i #this won't work if user types words and not a number
     input = GhibliDb::Film.all_sorted[input-1]
@@ -47,16 +49,20 @@ class GhibliDb::CLI
   end
 
   def list_films
-    puts "---|----------------------------------"
+    puts "    ---|----------------------------------"
     GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
-      puts "#{index}  | #{film.title}" if index < 10
-      puts "#{index} | #{film.title}" if index > 9
+      puts "    #{index}  | #{film.title}" if index < 10
+      puts "    #{index} | #{film.title}" if index > 9
       sleep(0.25)
     end
   end
 
   def line_break
     puts ""
+  end
+
+  def pastel
+    pastel = Pastel.new
   end
 
   def spirited_img
