@@ -10,25 +10,11 @@ class GhibliDb::CLI
   def welcome
     pastel = Pastel.new
     puts pastel.cyan("Welcome to the Studio Ghibli Database!")
+    sleep(1)
+    spirited_img
+    line_break
     puts pastel.red("Please wait a few moments while I fetch the films...")
   end
-
-  # def menu
-  #   # add .gsub /^\s*/, '' below to keep the indentation from the Here DOC from displaying in the CLI
-  #   # puts <<-DOC
-  #   #   ------------------------------------------------------------------
-  #   #   Please choose an option number or type "exit" to exit the program:
-  #   #   ------------------------------------------------------------------
-  #   #   1. I would like to see a list of all the Studio Ghibli films
-  #   #   2. I would like to search for a Studio Ghibli film
-  #   #   ------------------------------------------------------------------
-  #   # DOC
-  #   #   # 3. I would like a to see a list of species included in the films
-  #   #   # 4. I would like to search the films by title
-  #   #   # 5. I would like to search the films by species
-  #   #   # 6. I would like some trivia / facts / a quiz
-  #     main_pick
-  # end
 
   def options
     line_break
@@ -55,17 +41,10 @@ class GhibliDb::CLI
       puts "Species featured in this film:"
       puts pastel.yellow("------------------------------")
       input.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name} - #{species.classification}"}
+      line_break
     end
     # iterate through the species links associated with this movie, make that species using the API class
   end
-
-  # def main_pick
-  #   GhibliDb::API.get_films
-  #   input = gets.strip
-  #   if input == "1"
-  #     list_films
-  #   end
-  # end
 
   def list_films
     puts "---|----------------------------------"
@@ -74,17 +53,38 @@ class GhibliDb::CLI
       puts "#{index} | #{film.title}" if index > 9
       sleep(0.25)
     end
-    # GhibliDb::Film.all do |film|
-    #   puts "#{film.num}. #{film.title}"
-    # end
-    # tp GhibliDb::Film.all_sorted, "num", "title"
-    # GhibliDb::Film.all.each.with_index(1) do |film, index|
-    #   puts "#{index}. #{film.title}"
-    # end
   end
 
   def line_break
     puts ""
+  end
+
+  def spirited_img
+    puts <<-DOC
+    mNMMNNNmNMMNmdhyhhhhdmddyyysssyyyyyyyyyh///o+/-.``::+sysyyyyyyyyyyyyyy
+    NMMMMMMMMMMMMMMMMMMMMMMMNmdhhyyyyyyyyyyh/:.``-/ooo+:.`-oyyyyyyyyyyyyyy
+    NMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNmmdhhhhhh:`.smNNNNNNNms-`-shhhhhhhhhhhh
+    NMMMMMMMMMMMMMMMMMMMMMNNMMMMMMMMMMNmddh/`:mmmNNNNNNNddh+`.yhhdddddddmm
+    NMMMMMMMMMMNNNNNMMMNNNNNNNMMMMMMMMMMNd/`.dmyyNNNNNNNhyyh:`/mmNmNMMMMMM
+    mNNNMNNNMMMNNmmmmNmmmmmmmmNNNNNNNNNNNy.`+NdyyNNNNNNNdyyho`-dMMMMMMMMMM
+    ddmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmNm/``sdysymNNNNNmso+os`.sMMMMMMMMMM
+    ddddmmmmmmmmmmmmmmmmNNNNNNNNNNNNNNNNh:``ss::/dNNNNNmo+/os``:hNMMMNNMMM
+    mNNNNNNNNNNNNNNMMMMMMMNMNNNNNNNMMNNNs-``oNhyhNNNNNNNmyoyo``-oNNNNNNNNN
+    mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmd/-``:NdyyNNNNNNNmy/s/ `-/hmmmmmmmm
+    dddddddddddhhhhhhhssssyhhhhhhhhhhhho:.```mmyyNNNNNNNmy+h- `.:ohhhhhhhh
+    ddddhhhhhhhhhhhs/------:shhhhhhhhhh+:.`` oNdhNNNNNNNmyyy```.:+hhhhhhhh
+    dhhhhhhhhhhhhh+----:---..ohhhhhhhhs/:.`` `dNmNNNmmmNNdh/```.:/yhhhhhhh
+    hhhhhddhhhhhhy--:+:h/+/..-hhhhhhhh+/-.``  -mNNo-.../mhs` ``.:/ohhhhhhh
+    hhhhyNmdyhhhhy-+sshmdy/+.-hhhhhhhy+/-.``   :dNNdhhdmho`  ``.-//yhhhhhh
+    hhhydNNmyyhhhhoodhmmmmhh:/hhhhhhy+/:-.``    `:+ooo+:.    ``.-:+ohhhhhh
+    ssssmNNdss/.+s+/mmmmmmmy./ssssss+::-.``                  ```.-::+ssssy
+    ---+mmmdy/-..---/shddy+-`--:-:--..```                      ````..-:---
+    -----:::------:/osydho++/::::::...```                       ```.....-:
+    /////////////smNNNdhhhmNNNd+///....```                      ```......-
+    ////////////sNmmNNNNmNNNdmNy//-...````                      ````......
+    ::::::::::::dNmddmmmmmmdhNms:-...`````                      `````...``
+    :::::::::::/hhdhhhhhhhhsyhho:....``````                     `````...``
+    DOC
   end
 
 end
