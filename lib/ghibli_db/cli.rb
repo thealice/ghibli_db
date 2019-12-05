@@ -5,7 +5,6 @@ class GhibliDb::CLI
     welcome
     GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten or move
     main_menu
-    # goodbye
   end
 
   def welcome
@@ -22,9 +21,9 @@ class GhibliDb::CLI
   def main_menu
     list_main_options
     input = nil
-    while true
+    # while true
       input = gets.strip.downcase
-      if input === "exit"
+      if input == "exit"
         exit
       elsif input == "films" # add logic here to allow similar words
         list_films
@@ -34,7 +33,7 @@ class GhibliDb::CLI
         puts pastel.cyan("This is not a valid option.")
         main_menu
       end
-    end
+    # end
   end
 
   def list_main_options
@@ -94,7 +93,7 @@ class GhibliDb::CLI
         sleep(0.5)
         main_menu
       else
-        puts pastel.cyan("Please enter a valid number")
+        puts pastel.cyan("This is not a valid number!")
         character_details
       end
     end
@@ -106,7 +105,7 @@ class GhibliDb::CLI
     input = nil
     while true
       input = gets.strip.downcase
-      input === "exit" ? exit : input = input.to_i - 1
+      input == "exit" ? exit : input = input.to_i - 1
       if (0 .. GhibliDb::Film.all.size).cover?(input)
         film = GhibliDb::Film.all_sorted[input]
         puts pastel.yellow("--------------------------------------------------------------------------")
@@ -133,7 +132,7 @@ class GhibliDb::CLI
         sleep(0.5)
         main_menu
       else
-        puts pastel.cyan("Please enter a valid number")
+        puts pastel.cyan("This is not a valid number!")
         film_details
       end
     end
