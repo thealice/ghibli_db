@@ -29,13 +29,20 @@ class GhibliDb::CLI
     # 4. I would like to search the films by title
     # 5. I would like to search the films by species
     # 6. I would like to search for a Studio Ghibli film
-    input = gets.strip.to_i
-    if input == 1
-      list_films
-      film_options
-    elsif input == 2
-      list_characters
-      character_options
+    input = ""
+    while input != "exit"
+      input = gets.strip
+      if input == "1"
+        list_films
+        film_options
+      elsif input == "2"
+        list_characters
+        character_options
+      elsif input == "exit"
+        puts "Goodbye!"
+      else
+        puts "\nThis is not a valid option. Please choose one of the available options."
+      end
     end
   end
 
@@ -60,6 +67,11 @@ class GhibliDb::CLI
         puts "    #{index} | #{person.name}, a #{person.species}" if index > 9
         sleep(0.25)
       end
+      character_details
+  end
+
+  def character_details
+    puts "character details go here"
   end
 
   def film_details
@@ -103,7 +115,6 @@ class GhibliDb::CLI
     input = gets.strip.to_i
     if input == 1
       list_films
-      film_options
     elsif input == 2
       list_characters
       character_options
