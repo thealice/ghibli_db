@@ -70,13 +70,24 @@ class GhibliDb::CLI
   end
 
   def character_details
-    puts "character details go here"
+    line_break
+    puts pastel.red("Enter the number of the character you would like more information on:")
+    input = gets.strip.to_i
+      input = GhibliDb::Person.all[input-1]
+      puts "    Name: #{input.name}"
+      # Get Species belonging to Person
+      # puts "    Species: #{input.species}" if input.species
+      puts "    Age: #{input.age}" if input.age
+      puts "    Eye Color: #{input.eye_color}"
+      puts "    Hair Color: #{input.hair_color}"
+      puts "    Gender: #{input.gender}"
+      puts "    Film(s): #{input.films}"
+      sleep(1)
     main_menu
   end
 
   def film_details
     line_break
-    pastel
     puts pastel.red("Enter the number of the movie you would like more information on:")
     input = gets.strip.to_i #this won't work if user types words and not a number
     input = GhibliDb::Film.all_sorted[input-1]
@@ -132,10 +143,6 @@ class GhibliDb::CLI
 #     end
 
   # end
-
-  def character_options
-
-  end
 
   def line_break
     puts ""
