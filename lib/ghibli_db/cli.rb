@@ -14,7 +14,7 @@ class GhibliDb::CLI
     sleep(1.5)
     spirited_img
     puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts pastel.red("    Please take a deep breath and count to ten while I fetch the films...")
+    puts pastel.cyan("    Please take a deep breath and count to ten while I fetch the films...")
     line_break
   end
 
@@ -63,8 +63,8 @@ class GhibliDb::CLI
     puts pastel.cyan("     #") + " | " + pastel.cyan("Character                            ")
     puts "    ---|----------------------------------"
       GhibliDb::Person.all.each.with_index(1) do |person, index|
-        puts "    #{index}  | #{person.name}, a #{person.species}" if index < 10
-        puts "    #{index} | #{person.name}, a #{person.species}" if index > 9
+        puts "    #{index}  | #{person.name}, from #{person.films}" if index < 10
+        puts "    #{index} | #{person.name}, from #{person.films}" if index > 9
         sleep(0.25)
       end
       character_details
@@ -108,10 +108,10 @@ class GhibliDb::CLI
       input == "exit" ? exit : input = input.to_i - 1
       if (0 .. GhibliDb::Film.all.size).cover?(input)
         film = GhibliDb::Film.all_sorted[input]
-        puts pastel.yellow("--------------------------------------------------------------------------")
+        puts pastel.yellow("----------------------------------------------------------------------------------")
         puts pastel.cyan("#{film.title}") + " was released in" + pastel.cyan(" #{film.release_date}.") + " It was directed by" + pastel.cyan(" #{film.director}.")
         # puts pastel.white("It was directed by") + pastel.cyan(" #{input.director}")
-        puts pastel.yellow("--------------------------------------------------------------------------")
+        puts pastel.yellow("----------------------------------------------------------------------------------")
         puts "#{film.description}"
         # # need to figure out how to limit the line length of the descrpitions
           if film.people

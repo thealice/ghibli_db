@@ -7,11 +7,25 @@ class GhibliDb::Person
     attributes.each do |key, value|
       self.send("#{key}=", value) if self.respond_to?(key)
     end
-    #######if films or species end up being https://ghibliapi.herokuapp.com/films/ or https://ghibliapi.herokuapp.com/species/ then replace with "n/a"
+    @films = nil if self.films == ["https://ghibliapi.herokuapp.com/films/"]
+    self.add_films
   end
 
   def save
     @@all << self
+  end
+
+  def add_films
+      if self.films
+        films_array = self.films
+        films_array = films_array.map do |film|
+          binding.pry
+          film = GhibliDb::Film.find_or_create_by_url(film) # updates person from url to person object
+        end
+
+        # people_array.map.with_index {|person,index| person.films[index] = self}
+        self.films = films_array
+      end
   end
 
   def self.all
