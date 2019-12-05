@@ -34,7 +34,6 @@ class GhibliDb::CLI
       input = gets.strip
       if input == "1"
         list_films
-        film_options
       elsif input == "2"
         list_characters
         character_options
@@ -72,6 +71,7 @@ class GhibliDb::CLI
 
   def character_details
     puts "character details go here"
+    main_menu
   end
 
   def film_details
@@ -102,35 +102,36 @@ class GhibliDb::CLI
       input.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name}"}
       line_break
     end
+    main_menu
   end
 
-  def film_options
-    puts pastel.red("    Choose an option number or type 'exit' to exit the program:")
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts "    1. I would like to see a list of all the Studio Ghibli films"
-    puts "    2. I would like to see a list of some characters from the films"
-    puts "    3. I would like to see more about a character from this film" # display this only if the movie has people
-    puts "    4. I would like to see more about a species from this film" # display this only if the movie has species
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    input = gets.strip.to_i
-    if input == 1
-      list_films
-    elsif input == 2
-      list_characters
-      character_options
-    elsif input == 3
-      line_break
-      puts pastel.yellow("--------------------------------------")
-      puts "Highlighted character(s) in this film:"
-      puts pastel.yellow("--------------------------------------")
-      #this needs to call on the input from film_details
-      input.people.each.with_index(1) {|person, index| puts "#{index}. #{person.name}"}
-      line_break
-      puts pastel.red("Enter the number of the character you would like more information on:")
-## need to add logic for this
-    end
+#   def film_options
+#     # puts pastel.red("    Choose an option number or type 'exit' to exit the program:")
+#     # puts pastel.yellow("    ----------------------------------------------------------------------")
+#     # puts "    1. I would like to see a list of all the Studio Ghibli films"
+#     # puts "    2. I would like to see a list of some characters from the films"
+#     # puts "    3. I would like to see more about a character from this film" # display this only if the movie has people
+#     # puts "    4. I would like to see more about a species from this film" # display this only if the movie has species
+#     # puts pastel.yellow("    ----------------------------------------------------------------------")
+#     # input = gets.strip.to_i
+#     # if input == 1
+#     #   list_films
+#     # elsif input == 2
+#     #   list_characters
+#     #   character_options
+#     # elsif input == 3
+#     #   line_break
+#     #   puts pastel.yellow("--------------------------------------")
+#     #   puts "Highlighted character(s) in this film:"
+#     #   puts pastel.yellow("--------------------------------------")
+#     #   #this needs to call on the input from film_details
+#     #   input.people.each.with_index(1) {|person, index| puts "#{index}. #{person.name}"}
+#     #   line_break
+#     #   puts pastel.red("Enter the number of the character you would like more information on:")
+# ## need to add logic for this
+#     end
 
-  end
+  # end
 
   def character_options
 
