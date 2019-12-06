@@ -30,7 +30,7 @@ class GhibliDb::API
         new_film = GhibliDb::Film.find_or_create_by_url(url)
         # binding.pry
       end
-      new_person = GhibliDb::Person.create(person)
+      new_person = GhibliDb::Person.create(person) #person is a hash
       # binding.pry
     end
     results

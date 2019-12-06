@@ -4,6 +4,9 @@ class GhibliDb::Person
   @@all = []
 
   def initialize(attributes)
+    # @id = id
+    # @name = name
+    # @films = films
     attributes.each do |key, value|
         self.send("#{key}=", value) if self.respond_to?(key)
       end
