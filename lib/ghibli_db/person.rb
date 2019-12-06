@@ -5,11 +5,16 @@ class GhibliDb::Person
 
   def initialize(attributes)
     attributes.each do |key, value|
-      self.send("#{key}=", value) if self.respond_to?(key)
-    end
-    @films = nil if self.films == ["https://ghibliapi.herokuapp.com/films/"]
-    self.add_films
+        self.send("#{key}=", value) if self.respond_to?(key)
+      end
   end
+  # def initialize(attributes)
+  #   attributes.each do |key, value|
+  #     self.send("#{key}=", value) if self.respond_to?(key)
+  #   end
+  #   @films = nil if self.films == ["https://ghibliapi.herokuapp.com/films/"]
+  #   self.add_films
+  # end
 
   def save
     @@all << self
@@ -19,8 +24,7 @@ class GhibliDb::Person
       if self.films
         films_array = self.films
         films_array = films_array.map do |film|
-          binding.pry
-          film = GhibliDb::Film.find_or_create_by_url(film) # updates person from url to person object
+          film = GhibliDb::Film.find_by_url(film) # updates person from url to person object
         end
 
         # people_array.map.with_index {|person,index| person.films[index] = self}
@@ -30,6 +34,11 @@ class GhibliDb::Person
 
   def self.all
     @@all
+  end
+
+  def self.create(person_hash)
+    object = self.new(person_hash)
+    object.save
   end
 
   def self.create_from_collection(array_of_urls)

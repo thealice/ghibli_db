@@ -13,10 +13,11 @@ class GhibliDb::Film
     @people = nil if self.people == ["https://ghibliapi.herokuapp.com/people/"]
     @locations = nil if self.locations == ["https://ghibliapi.herokuapp.com/locations/"]
     @species = nil if self.species == ["https://ghibliapi.herokuapp.com/species/"]
-    @num = nil
+    # @num = nil
     self.add_people
-    self.add_species
-    # self.add_list_num
+
+    # self.add_species
+    # # self.add_list_num
   end
 
   def save
@@ -92,7 +93,8 @@ class GhibliDb::Film
   end
 
   def self.create_by_url(url)
-    self.new(url).tap do |object|
+    object_hash = GhibliDb::API.get_object_by_url(url)
+    self.new(object_hash).tap do |object|
         object.save
       end
   end

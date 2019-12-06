@@ -3,7 +3,9 @@ class GhibliDb::CLI
   def start
     pastel
     welcome
+
     GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten or move
+    GhibliDb::API.get_people
     main_menu
   end
 
@@ -119,16 +121,22 @@ class GhibliDb::CLI
             puts pastel.yellow("--------------------------------------")
             puts "Highlighted character(s) in this film:"
             puts pastel.yellow("--------------------------------------")
-            film.people.each.with_index(1) {|person, index| puts "#{index}. #{person.name}"}
+            film.people.each.with_index(1) do |person, index|
+              if person.age && person.gender && film.people.size > 1 
+                puts "#{index}. #{person.name}, #{person.age} year-old #{person.gender}"
+              else
+                puts "#{person.name}"
+              end
+            end
           end
-          if film.species
-            line_break
-            puts pastel.yellow("------------------------------")
-            puts "Species featured in this film:"
-            puts pastel.yellow("------------------------------")
-            film.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name}"}
-            line_break
-          end
+          # if film.species
+          #   line_break
+          #   puts pastel.yellow("------------------------------")
+          #   puts "Species featured in this film:"
+          #   puts pastel.yellow("------------------------------")
+          #   film.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name}"}
+          #   line_break
+          # end
         sleep(0.5)
         main_menu
       else
