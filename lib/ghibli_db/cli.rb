@@ -64,6 +64,7 @@ class GhibliDb::CLI
     puts pastel.cyan("     #") + " | " + pastel.cyan("Character                            ")
     puts "    ---|----------------------------------"
       GhibliDb::Person.all.each.with_index(1) do |person, index|
+        # binding.pry
         puts "    #{index}  | #{person.name}, from #{person.films}" if index < 10
         puts "    #{index} | #{person.name}, from #{person.films}" if index > 9
         sleep(0.25)
