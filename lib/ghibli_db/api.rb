@@ -26,7 +26,7 @@ class GhibliDb::API
       age = person["age"]
       eye_color = person["eye_color"]
       hair_color = person["hair_color"]
-      films = person["films"].each do |url|
+      films = person["films"].map do |url|
         GhibliDb::Film.find_or_create_by_url(url)
       end
       person = GhibliDb::Person.create(person)

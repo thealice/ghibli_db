@@ -5,7 +5,7 @@ class GhibliDb::Person
 
   def initialize(attributes)
     attributes.each do |key, value|
-        self.send("#{key}=", value) if self.respond_to?(key)
+        self.send("#{key}=", value) if self.respond_to?(key) && key != "films"
       end
   end
   # def initialize(attributes)
