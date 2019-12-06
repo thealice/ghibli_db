@@ -20,12 +20,12 @@ class GhibliDb::CLI
   end
 
   def main_menu
-    list_main_options
     input = nil
-    # while true
+    while input != "exit"
+      list_main_options
       input = gets.strip.downcase
       if input == "exit"
-        exit
+        goodbye
       elsif input == "films" # add logic here to allow similar words
         list_films
       elsif input == "characters"
@@ -34,7 +34,7 @@ class GhibliDb::CLI
         puts pastel.cyan("This is not a valid option.")
         main_menu
       end
-    # end
+    end
   end
 
   def list_main_options
@@ -75,10 +75,10 @@ class GhibliDb::CLI
     line_break
     puts pastel.red("Enter the number of the character you would like more information on:")
     input = nil
-    while true
+    # while true
       input = gets.strip.downcase
       if input === "exit"
-        exit
+        goodbye
       end
       input = input.to_i - 1
       if (0 .. GhibliDb::Person.all.size).cover?(input)
@@ -92,21 +92,20 @@ class GhibliDb::CLI
         puts "    Gender: #{person.gender}"
         puts "    Film(s): #{person.films}"
         sleep(0.5)
-        main_menu
       else
         puts pastel.cyan("This is not a valid number!")
         character_details
       end
-    end
+    # end
   end
 
   def film_details
     line_break
     puts pastel.red("Please enter the number of the film you would like more information on:")
     input = nil
-    while true
+    # while true
       input = gets.strip.downcase
-      input == "exit" ? exit : input = input.to_i - 1
+      input = input.to_i - 1
       if (0 .. GhibliDb::Film.all.size).cover?(input)
         film = GhibliDb::Film.all_sorted[input]
         puts pastel.yellow("----------------------------------------------------------------------------------")
@@ -137,16 +136,20 @@ class GhibliDb::CLI
           #   line_break
           # end
         sleep(0.5)
-        main_menu
+        # main_menu
       else
         puts pastel.cyan("This is not a valid number!")
         film_details
       end
-    end
+    # end
   end
 
   def line_break
     puts ""
+  end
+
+  def goodbye
+    puts "Goodbye!"
   end
 
   def pastel
