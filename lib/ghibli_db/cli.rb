@@ -4,6 +4,7 @@ class GhibliDb::CLI
     pastel
     welcome
     GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten or move
+    GhibliDb::API.get_people
     main_menu
   end
 
@@ -14,29 +15,36 @@ class GhibliDb::CLI
     sleep(1.5)
     spirited_img
     puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts pastel.red("    Please take a deep breath and count to ten while I fetch the films...")
+    puts pastel.cyan("    Please take a deep breath and count to ten while I fetch the films...")
     line_break
   end
 
   def main_menu
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts pastel.red("    Choose an option number or type 'exit' to exit the program:")
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts "    1. I would like to see a list of all the Studio Ghibli films"
-    puts "    2. I would like to see a list of some characters from the films"
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    # 3. I would like a to see a list of species included in the films
-    # 4. I would like to search the films by title
-    # 5. I would like to search the films by species
-    # 6. I would like to search for a Studio Ghibli film
-    input = gets.strip.to_i
-    if input == 1
-      list_films
-      film_options
-    elsif input == 2
-      list_characters
-      character_options
+    input = nil
+    while input != "exit"
+      list_main_options
+      input = gets.strip.downcase
+      if input == "exit"
+        goodbye
+      elsif input == "films" # add logic here to allow similar words
+        list_films
+      elsif input == "characters"
+        list_characters
+      else
+        puts pastel.cyan("This is not a valid option.")
+        main_menu
+      end
     end
+  end
+
+  def list_main_options
+    puts pastel.yellow("    ----------------------------------------------------------------------")
+    puts pastel.red("    Choose an option below or type 'exit' to exit the program:")
+    puts pastel.yellow("    ----------------------------------------------------------------------")
+    puts "    Type 'films' to see a list of all the Studio Ghibli films"
+    puts "    Type 'characters' to see a list of some characters from the films"
+    # puts "    Type 'search' to search films by title"
+    puts pastel.yellow("    ----------------------------------------------------------------------")
   end
 
   def list_films
@@ -56,77 +64,91 @@ class GhibliDb::CLI
     puts pastel.cyan("     #") + " | " + pastel.cyan("Character                            ")
     puts "    ---|----------------------------------"
       GhibliDb::Person.all.each.with_index(1) do |person, index|
-        puts "    #{index}  | #{person.name}, a #{person.species}" if index < 10
-        puts "    #{index} | #{person.name}, a #{person.species}" if index > 9
-        sleep(0.25)
+          puts "    #{index}  | #{person.name}, from #{person.films}" if index < 10
+          puts "    #{index} | #{person.name}, from #{person.films}" if index > 9
       end
+      character_details
+  end
+
+  def character_details
+    line_break
+    puts pastel.red("Enter the number of the character you would like more information on:")
+    input = nil
+    # while true
+      input = gets.strip.downcase
+      if input === "exit"
+        goodbye
+      end
+      input = input.to_i - 1
+      if (0 .. GhibliDb::Person.all.size).cover?(input)
+        person = GhibliDb::Person.all[input]
+        puts "    Name: #{person.name}"
+        # Get Species belonging to Person
+        # puts "    Species: #{input.species}" if input.species
+        puts "    Age: #{person.age}" if person.age
+        puts "    Eye Color: #{person.eye_color}"
+        puts "    Hair Color: #{person.hair_color}"
+        puts "    Gender: #{person.gender}"
+        puts "    Film(s): #{person.films}"
+        sleep(0.5)
+      else
+        puts pastel.cyan("This is not a valid number!")
+        character_details
+      end
+    # end
   end
 
   def film_details
     line_break
-    pastel
-    puts pastel.red("Enter the number of the movie you would like more information on:")
-    input = gets.strip.to_i #this won't work if user types words and not a number
-    input = GhibliDb::Film.all_sorted[input-1]
-    # tp input, "title", "species", "release_date"
-    puts pastel.yellow("--------------------------------------------------------------------------")
-    puts pastel.cyan("#{input.title}") + " was released in" + pastel.cyan(" #{input.release_date}.") + " It was directed by" + pastel.cyan(" #{input.director}.")
-    # puts pastel.white("It was directed by") + pastel.cyan(" #{input.director}")
-    puts pastel.yellow("--------------------------------------------------------------------------")
-    puts "#{input.description}"
-    # # need to figure out how to limit the line length of the descrpitions
-    if input.people
-      line_break
-      puts pastel.yellow("--------------------------------------")
-      puts "Highlighted character(s) in this film:"
-      puts pastel.yellow("--------------------------------------")
-      input.people.each.with_index(1) {|person, index| puts "#{index}. #{person.name}"}
-    end
-    if input.species
-      line_break
-      puts pastel.yellow("------------------------------")
-      puts "Species featured in this film:"
-      puts pastel.yellow("------------------------------")
-      input.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name}"}
-      line_break
-    end
-  end
-
-  def film_options
-    puts pastel.red("    Choose an option number or type 'exit' to exit the program:")
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts "    1. I would like to see a list of all the Studio Ghibli films"
-    puts "    2. I would like to see a list of some characters from the films"
-    puts "    3. I would like to see more about a character from this film" # display this only if the movie has people
-    puts "    4. I would like to see more about a species from this film" # display this only if the movie has species
-    puts pastel.yellow("    ----------------------------------------------------------------------")
-    input = gets.strip.to_i
-    if input == 1
-      list_films
-      film_options
-    elsif input == 2
-      list_characters
-      character_options
-    elsif input == 3
-      line_break
-      puts pastel.yellow("--------------------------------------")
-      puts "Highlighted character(s) in this film:"
-      puts pastel.yellow("--------------------------------------")
-      #this needs to call on the input from film_details
-      input.people.each.with_index(1) {|person, index| puts "#{index}. #{person.name}"}
-      line_break
-      puts pastel.red("Enter the number of the character you would like more information on:")
-## need to add logic for this
-    end
-
-  end
-
-  def character_options
-
+    puts pastel.red("Please enter the number of the film you would like more information on:")
+    input = nil
+    # while true
+      input = gets.strip.downcase
+      input = input.to_i - 1
+      if (0 .. GhibliDb::Film.all.size).cover?(input)
+        film = GhibliDb::Film.all_sorted[input]
+        puts pastel.yellow("----------------------------------------------------------------------------------")
+        puts pastel.cyan("#{film.title}") + " was released in" + pastel.cyan(" #{film.release_date}.") + " It was directed by" + pastel.cyan(" #{film.director}.")
+        # puts pastel.white("It was directed by") + pastel.cyan(" #{input.director}")
+        puts pastel.yellow("----------------------------------------------------------------------------------")
+        puts "#{film.description}"
+        # # need to figure out how to limit the line length of the descrpitions
+          if film.people
+            line_break
+            puts pastel.yellow("--------------------------------------")
+            puts "Highlighted character(s) in this film:"
+            puts pastel.yellow("--------------------------------------")
+            film.people.each.with_index(1) do |person, index|
+              if person.age && person.gender && film.people.size > 1
+                puts "#{index}. #{person.name}, #{person.age} year-old #{person.gender}"
+              else
+                puts "#{person.name}"
+              end
+            end
+          end
+          # if film.species
+          #   line_break
+          #   puts pastel.yellow("------------------------------")
+          #   puts "Species featured in this film:"
+          #   puts pastel.yellow("------------------------------")
+          #   film.species.each.with_index(1) { |species, index| puts "#{index}. #{species.name}"}
+          #   line_break
+          # end
+        sleep(0.5)
+        # main_menu
+      else
+        puts pastel.cyan("This is not a valid number!")
+        film_details
+      end
+    # end
   end
 
   def line_break
     puts ""
+  end
+
+  def goodbye
+    puts "Goodbye!"
   end
 
   def pastel
