@@ -12,6 +12,7 @@ class GhibliDb::Film
     end
     @people = []
     #add people here?
+
   end
 
   def save
@@ -98,8 +99,5 @@ class GhibliDb::Film
     find_by_url(url) || self.create_by_url(url)
   end
 # end findables
-
-
-
 
 end
