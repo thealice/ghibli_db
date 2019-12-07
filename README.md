@@ -1,6 +1,5 @@
 # GhibliDb, The Studio Ghibli Movie Database 
-![8-bit Studio Ghibli by Richard J. Evans](/images/8-bit-logo.png)
-Image Source: [Richard J. Evans](https://www.behance.net/RichEvans)
+![8-bit Studio Ghibli by Richard J. Evans](/images/8-bit-logo.png) <br /> Image Source: [Richard J. Evans](https://www.behance.net/RichEvans)
 
 A simple database of Studio Ghibli films. Use it to view details on films and characters.
 
