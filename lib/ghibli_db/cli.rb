@@ -30,7 +30,7 @@ class GhibliDb::CLI
         goodbye
       elsif input == "films" # add logic here to allow similar words
         list_films
-      elsif input == "characters"
+      elsif input == "people"
         list_characters
       else
         puts pastel.cyan("This is not a valid option.")
@@ -44,7 +44,7 @@ class GhibliDb::CLI
     puts pastel.red("    Choose an option below or type 'exit' to exit the program:")
     puts pastel.yellow("    ----------------------------------------------------------------------")
     puts "    Type 'films' to see a list of all the Studio Ghibli films"
-    puts "    Type 'characters' to see a list of some characters from the films"
+    puts "    Type 'people' to see a list of some characters from the films"
     # puts "    Type 'search' to search films by title"
     puts pastel.yellow("    ----------------------------------------------------------------------")
   end
