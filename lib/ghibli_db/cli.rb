@@ -130,13 +130,16 @@ class GhibliDb::CLI
             puts pastel.yellow("--------------------------------------")
             puts "Highlighted character(s) in this film:"
             puts pastel.yellow("--------------------------------------")
-            film.people.each.with_index(1) do |person, index|
-              if person.age && person.gender && film.people.size > 1
-                puts "#{index}. #{person.name}, #{person.age} year-old #{person.gender}"
-              else
-                puts "#{person.name}"
-              end
-            end
+            puts "need to confirm add people to films and then list them here"
+            # film.people.each.with_index(1) do |person, index|
+            #
+            #   if person.age && person.gender && film.people.size > 1
+            #
+            #     puts "#{index}. #{person["name"]}, #{person.age} year-old #{person.gender}"
+            #   else
+            #     puts "#{person.name}"
+            #   end
+            # end
           end
           # if film.species
           #   line_break

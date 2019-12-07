@@ -6,6 +6,9 @@ class GhibliDb::API
     results = HTTParty.get("#{BASE_URL}/films")
     results = results.parsed_response
     GhibliDb::Film.create_from_collection(results)
+    ## should add people go here????
+    # GhibliDb::Film.add_people
+
     # results.each do |film|
     #   id = film["id"]
     #   title = film["title"]
@@ -29,15 +32,23 @@ class GhibliDb::API
       hair_color = person["hair_color"]
       person["films"] = person["films"].map do |url|
         new_film = GhibliDb::Film.find_or_create_by_url(url)
-        # new_film.people << person
-
       end
 
 
         #     self.people = people_array
       new_person = GhibliDb::Person.find_or_create_hash(person) #person is a hash
-      # binding.pry
+
     end
+    ## Is this doing anything????
+    people.map.with_index do |person_hash, index|
+
+      person_hash["films"].each do |film|
+
+        film.people << person_hash unless film.people.include?(person_hash)
+
+      end
+    end
+    # people[index]["films"][index].people
     people
   end
 

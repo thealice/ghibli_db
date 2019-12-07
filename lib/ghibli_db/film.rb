@@ -11,14 +11,7 @@ class GhibliDb::Film
       self.send("#{key}=", value) if self.respond_to?(key) #checks to see if that object has a method that it can call for that key (a getter/reader method). if there is no reader for that key, it will not execute the setter for that.
     end
     @people = []
-    # # @people = nil if self.people == ["https://ghibliapi.herokuapp.com/people/"]
-    # @locations = nil if self.locations == ["https://ghibliapi.herokuapp.com/locations/"]
-    # @species = nil if self.species == ["https://ghibliapi.herokuapp.com/species/"]
-    # # @num = nil
-    # self.add_people
-
-    # self.add_species
-    # # self.add_list_num
+    #add people here?
   end
 
   def save
@@ -48,14 +41,6 @@ class GhibliDb::Film
     end
   end
 
-
-  # def add_list_num
-  #   GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
-  #     film.num = index
-  #     self.save
-  #   end
-  # end
-
   def sortable_title
     self.title.sub(/^(the|a|an)\s+/i, "")
   end
@@ -75,16 +60,22 @@ class GhibliDb::Film
   def self.create_from_collection(array_of_hashes)
     array_of_hashes.each do |film_hash|
       film_object = self.new(film_hash)
+      #add people here?
       film_object.save unless self.all.include?(film_object)
     end
   end
 
   def self.make_films
     films = GhibliDb::API.get_films
+    #add people to films
   end
 
-  def add_person(person)
-    @people << person
+  def self.add_people(array_of_people)
+    self.all.each do |film_object|
+      #
+      # film_object.people << ????
+    end
+
   end
 
 ## move to findable module?
@@ -99,7 +90,6 @@ class GhibliDb::Film
   def self.create_by_url(url)
     object_hash = GhibliDb::API.get_object_by_url(url)
     self.new(object_hash).tap do |object|
-      binding.pry
         object.save unless self.all.include?(object)
       end
   end
