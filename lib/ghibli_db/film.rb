@@ -37,9 +37,6 @@ class GhibliDb::Film
   #   end
   # end
 
-  def add_person(object)
-  end
-
   def add_species
     if self.species
       species_array = self.species
@@ -78,13 +75,16 @@ class GhibliDb::Film
   def self.create_from_collection(array_of_hashes)
     array_of_hashes.each do |film_hash|
       film_object = self.new(film_hash)
-      film_object.save
+      film_object.save unless self.all.include?(film_object)
     end
   end
 
   def self.make_films
     films = GhibliDb::API.get_films
-    self.create_from_collection(films)
+  end
+
+  def add_person(person)
+    @people << person
   end
 
 ## move to findable module?
@@ -99,7 +99,8 @@ class GhibliDb::Film
   def self.create_by_url(url)
     object_hash = GhibliDb::API.get_object_by_url(url)
     self.new(object_hash).tap do |object|
-        object.save
+      binding.pry
+        object.save unless self.all.include?(object)
       end
   end
 

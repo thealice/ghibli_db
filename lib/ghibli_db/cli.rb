@@ -5,7 +5,7 @@ class GhibliDb::CLI
     welcome
 
 
-    GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten or move
+    GhibliDb::API.get_films ## this takes a long time to load, figure out how to shorten or move
     GhibliDb::API.get_people
     main_menu
   end
