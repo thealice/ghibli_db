@@ -4,32 +4,21 @@ class GhibliDb::Person
   @@all = []
 
   def initialize(attributes)
-    # @id = id
-    # @name = name
-    # @films = films
     attributes.each do |key, value|
         self.send("#{key}=", value) if self.respond_to?(key)
       end
   end
-  # def initialize(attributes)
-  #   attributes.each do |key, value|
-  #     self.send("#{key}=", value) if self.respond_to?(key)
-  #   end
-  #   @films = nil if self.films == ["https://ghibliapi.herokuapp.com/films/"]
-  #   self.add_films
-  # end
 
   def save
     @@all << self
   end
 
-  def add_films
+  def add_films # confirm return value
       if self.films
         films_array = self.films
         films_array = films_array.map do |film|
           film = GhibliDb::Film.find_by_url(film) # updates person from url to person object
         end
-
         # people_array.map.with_index {|person,index| person.films[index] = self}
         self.films = films_array
       end
@@ -59,10 +48,6 @@ class GhibliDb::Person
     end
   end
 
-  def self.find_by_id(id)
-    self.all.detect {|object| object.id == id}
-  end
-
   def self.find_by_url(url)
     self.all.detect {|object| object.url == url}
   end
@@ -78,21 +63,4 @@ class GhibliDb::Person
     find_by_url(url) || self.create_by_url(url)
   end
 
-  # def self.make_people
-  #   results = GhibliDb::API.get_people
-  #   self.create_from_collection(results)
-  # end
-######?
-  # def films=(url_collection)
-  #   url_collection.each do |url|
-  #     GhibliDb::Film.find_or_create_by_url(url)
-  #   end
-  # end
-
-
-  # def self.films=(film_urls_array)
-  #   film_objects_array = films_urls_array.each do |url|
-  #     binding.pry
-  #   end
-  # end
 end
