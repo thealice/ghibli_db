@@ -1,7 +1,8 @@
-# GhibliDb
+# GhibliDb, The Studio Ghibli Movie Database 
 ![8-bit Studio Ghibli by Richard J. Evans](/images/8-bit-logo.png)
-
 Image Source: [Richard J. Evans](https://www.behance.net/RichEvans)
+
+A simple database of Studio Ghibli films. Use it to view details on films and characters.
 
 ## Installation
 
@@ -21,7 +22,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Running `bin/setup` will install dependencies. 
+`bin/run` will start the program.
 
 ## Development
 
@@ -31,7 +33,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/'thealice'/ghibli_db. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/thealice/ghibli_db. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
