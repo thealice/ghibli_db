@@ -3,7 +3,9 @@ class GhibliDb::CLI
   def start
     pastel
     welcome
-    GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten or move
+
+
+    GhibliDb::API.get_films ## this takes a long time to load, figure out how to shorten or move
     GhibliDb::API.get_people
     main_menu
   end
@@ -28,7 +30,7 @@ class GhibliDb::CLI
         goodbye
       elsif input == "films" # add logic here to allow similar words
         list_films
-      elsif input == "characters"
+      elsif input == "people"
         list_characters
       else
         puts pastel.cyan("This is not a valid option.")
@@ -42,7 +44,7 @@ class GhibliDb::CLI
     puts pastel.red("    Choose an option below or type 'exit' to exit the program:")
     puts pastel.yellow("    ----------------------------------------------------------------------")
     puts "    Type 'films' to see a list of all the Studio Ghibli films"
-    puts "    Type 'characters' to see a list of some characters from the films"
+    puts "    Type 'people' to see a list of some characters from the films"
     # puts "    Type 'search' to search films by title"
     puts pastel.yellow("    ----------------------------------------------------------------------")
   end
@@ -53,7 +55,7 @@ class GhibliDb::CLI
     GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
       puts "    #{index}  | #{film.title}" if index < 10
       puts "    #{index} | #{film.title}" if index > 9
-      sleep(0.25)
+      # sleep(0.25)
     end
     film_details
   end
@@ -64,8 +66,8 @@ class GhibliDb::CLI
     puts pastel.cyan("     #") + " | " + pastel.cyan("Character                            ")
     puts "    ---|----------------------------------"
       GhibliDb::Person.all.each.with_index(1) do |person, index|
-          puts "    #{index}  | #{person.name}, from #{person.films}" if index < 10
-          puts "    #{index} | #{person.name}, from #{person.films}" if index > 9
+          puts "    #{index}  | #{person.name}" if index < 10
+          puts "    #{index} | #{person.name}" if index > 9
       end
       character_details
   end
@@ -85,11 +87,21 @@ class GhibliDb::CLI
         puts "    Name: #{person.name}"
         # Get Species belonging to Person
         # puts "    Species: #{input.species}" if input.species
-        puts "    Age: #{person.age}" if person.age
+        if person.age == ""
+          puts "    Age: Unknown"
+        else
+          puts "    Age: #{person.age}"
+        end
         puts "    Eye Color: #{person.eye_color}"
         puts "    Hair Color: #{person.hair_color}"
         puts "    Gender: #{person.gender}"
-        puts "    Film(s): #{person.films}"
+        if person.films.size > 1
+          puts "    Films: "
+          person.films.each.with_index(1) {|film, index| puts "            #{index}. #{film.title}"}
+        else
+          puts "    Film: #{person.films[0].title}"
+        end
+        line_break
         sleep(0.5)
       else
         puts pastel.cyan("This is not a valid number!")
@@ -118,13 +130,16 @@ class GhibliDb::CLI
             puts pastel.yellow("--------------------------------------")
             puts "Highlighted character(s) in this film:"
             puts pastel.yellow("--------------------------------------")
-            film.people.each.with_index(1) do |person, index|
-              if person.age && person.gender && film.people.size > 1
-                puts "#{index}. #{person.name}, #{person.age} year-old #{person.gender}"
-              else
-                puts "#{person.name}"
-              end
-            end
+            puts "need to confirm add people to films and then list them here"
+            # film.people.each.with_index(1) do |person, index|
+            #
+            #   if person.age && person.gender && film.people.size > 1
+            #
+            #     puts "#{index}. #{person["name"]}, #{person.age} year-old #{person.gender}"
+            #   else
+            #     puts "#{person.name}"
+            #   end
+            # end
           end
           # if film.species
           #   line_break

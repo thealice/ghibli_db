@@ -39,9 +39,17 @@ class GhibliDb::Person
     @@all
   end
 
-  def self.create(person_hash)
-    object = self.new(person_hash)
+  def self.create(object_hash)
+    object = self.new(object_hash)
     object.save
+  end
+
+  def self.find(object_hash)
+    self.all.detect {|object| object == object_hash}
+  end
+
+  def self.find_or_create_hash(hash)
+    find(hash) || self.create(hash)
   end
 
   def self.create_from_collection(array_of_urls)
