@@ -3,6 +3,8 @@ class GhibliDb::CLI
   def start
     pastel
     welcome
+
+
     GhibliDb::Film.make_films ## this takes a long time to load, figure out how to shorten or move
     GhibliDb::API.get_people
     main_menu
@@ -53,7 +55,7 @@ class GhibliDb::CLI
     GhibliDb::Film.all_sorted.each.with_index(1) do |film, index|
       puts "    #{index}  | #{film.title}" if index < 10
       puts "    #{index} | #{film.title}" if index > 9
-      sleep(0.25)
+      # sleep(0.25)
     end
     film_details
   end
@@ -64,8 +66,8 @@ class GhibliDb::CLI
     puts pastel.cyan("     #") + " | " + pastel.cyan("Character                            ")
     puts "    ---|----------------------------------"
       GhibliDb::Person.all.each.with_index(1) do |person, index|
-          puts "    #{index}  | #{person.name}, from #{person.films}" if index < 10
-          puts "    #{index} | #{person.name}, from #{person.films}" if index > 9
+          puts "    #{index}  | #{person.name}" if index < 10
+          puts "    #{index} | #{person.name}" if index > 9
       end
       character_details
   end
@@ -85,11 +87,21 @@ class GhibliDb::CLI
         puts "    Name: #{person.name}"
         # Get Species belonging to Person
         # puts "    Species: #{input.species}" if input.species
-        puts "    Age: #{person.age}" if person.age
+        if person.age == ""
+          puts "    Age: Unknown"
+        else
+          puts "    Age: #{person.age}"
+        end
         puts "    Eye Color: #{person.eye_color}"
         puts "    Hair Color: #{person.hair_color}"
         puts "    Gender: #{person.gender}"
-        puts "    Film(s): #{person.films}"
+        if person.films.size > 1
+          puts "    Films: "
+          person.films.each.with_index(1) {|film, index| puts "            #{index}. #{film.title}"}
+        else
+          puts "    Film: #{person.films[0].title}"
+        end
+        line_break
         sleep(0.5)
       else
         puts pastel.cyan("This is not a valid number!")

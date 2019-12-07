@@ -18,8 +18,8 @@ class GhibliDb::API
 
   def self.get_people
     results = HTTParty.get("#{BASE_URL}/people")
-    results = results.parsed_response
-    results.map do |person| #person is a hash
+    people = results.parsed_response
+    people.map do |person| #person is a hash
       id = person["id"]
       name = person["name"]
       gender = person["gender"]
@@ -27,19 +27,38 @@ class GhibliDb::API
       eye_color = person["eye_color"]
       hair_color = person["hair_color"]
       person["films"] = person["films"].map do |url|
-        new_film = GhibliDb::Film.find_or_create_by_url(url)
-        # binding.pry
-      end
+     new_film = GhibliDb::Film.find_or_create_by_url(url)
+     # binding.pry
+   end
+        #     self.people = people_array
       new_person = GhibliDb::Person.create(person) #person is a hash
       # binding.pry
     end
-    results
+    people
   end
 
   def self.get_object_by_url(url)
     results = HTTParty.get(url)
     results = results.parsed_response
   end
+
+  def self.get_film_by_url(url)
+    results = HTTParty.get(url)
+    results = results.parsed_response
+  end
+
+  def self.find_or_make_by_url(url)
+    object_hash = get_object_by_url(url)
+
+
+  end
+
+  def self.find_by_url(url)
+  end
+
+  def self.make_by_url(url)
+  end
+
 
   # def get_people_by_film_id(film_id)
   #   results = HTTParty.get("#{BASE_URL}/films/#{film_id}")
