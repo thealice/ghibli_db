@@ -10,10 +10,12 @@ class GhibliDb::CLI
 
   def welcome
     puts pastel.yellow("    ----------------------------------------------------------------------")
-    puts pastel.cyan('    "Welcome to the Studio Ghibli Database!"') + "   ヽ(´ー｀)ノ"
+    puts pastel.cyan('    Welcome to the Studio Ghibli Database!') + "    ー( ´ ▽ ` )ﾉ"
     puts pastel.yellow("    ----------------------------------------------------------------------")
     sleep(1)
     spirited_img
+    puts pastel.yellow("    ----------------------------------------------------------------------")
+    puts pastel.cyan("    (∩｀-´)⊃━☆ﾟ.*･｡ﾟ Please be patient while I fetch the films...")
   end
 
   def main_menu
@@ -119,20 +121,20 @@ class GhibliDb::CLI
           puts pastel.yellow("-------------------")
           gender = film.people[0]['gender'].downcase
           species = film.people[0]['species'].downcase
-          if gender != ""
+          if gender != "" && gender != "na"
             puts "#{film.people[0]['name']}, a #{gender} #{species}"
           else
             puts "#{film.people[0]['name']}, a #{species}"
           end
 
         elsif film.people.size > 1
-          puts pastel.yellow("--------------------")
+          puts pastel.yellow("-------------------------")
           puts pastel.cyan("Featured Characters:")
-          puts pastel.yellow("--------------------")
+          puts pastel.yellow("-------------------------")
           film.people.each.with_index(1) do |person, index|
             gender = person['gender'].downcase
             species = person['species'].downcase
-            if gender != ""
+            if gender != "" && gender != "na"
               puts "#{index}. #{person['name']}, a #{gender} #{species}"
             else
               puts "#{index}. #{person['name']}, a #{species}"
@@ -141,7 +143,7 @@ class GhibliDb::CLI
           end
         else
           line_break
-          puts pastel.cyan("(ﾉ´ｰ`)ﾉ There are no featured characters in this film")
+          puts pastel.cyan("(ﾉ´ｰ`)ﾉ There are no featured characters in this film!")
         end
 
         line_break
@@ -157,7 +159,7 @@ class GhibliDb::CLI
   end
 
   def goodbye
-    puts "Goodbye!"
+    puts "Goodbye! (￣ｰ￣)ﾉ"
   end
 
   def pastel
