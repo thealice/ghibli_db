@@ -82,6 +82,7 @@ class GhibliDb::CLI
         else
           puts pastel.yellow("    Age: ") + "#{person.age}"
         end
+        puts pastel.yellow("    Species: ") + "#{person.species}"
         puts pastel.yellow("    Gender: ") + "#{person.gender}"
         puts pastel.yellow("    Eye Color: ") + "#{person.eye_color}"
         puts pastel.yellow("    Hair Color: ") + "#{person.hair_color}"
@@ -112,6 +113,22 @@ class GhibliDb::CLI
         puts pastel.cyan("#{film.title}") + " was released in" + pastel.cyan(" #{film.release_date}.") + " It was directed by" + pastel.cyan(" #{film.director}.")
         puts pastel.yellow("----------------------------------------------------------------------------------")
         puts "#{film.description}"
+        if film.people.size == 1
+          puts pastel.yellow("-------------------")
+          puts pastel.cyan("Featured Character:")
+          puts pastel.yellow("-------------------")
+          puts "#{film.people[0]['name']}"
+        elsif film.people.size > 1
+          puts pastel.yellow("--------------------")
+          puts pastel.cyan("Featured Characters:")
+          puts pastel.yellow("--------------------")
+          film.people.each.with_index(1) do |person, index|
+            puts "#{index}. #{person['name']}"
+          end
+        else
+          puts pastel.cyan("(ﾉ´ｰ`)ﾉ There are no featured characters in this film")
+        end
+
         line_break
         sleep(0.5)
       else
