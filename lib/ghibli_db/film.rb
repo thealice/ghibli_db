@@ -34,19 +34,19 @@ class GhibliDb::Film
   def self.create_from_collection(array_of_hashes)
     array_of_hashes.each do |film_hash|
       film_object = self.new(film_hash)
-      film_object.save unless self.all.include?(film_object)
+      film_object.save
     end
   end
 
 ## move to findable module?
   def self.find_by_url(url)
-    self.all.detect {|object| object.url == url} # this returns an array of a hash or?
+    self.all.detect {|object| object.url == url}
   end
 
   def self.create_by_url(url)
     object_hash = GhibliDb::API.get_object_by_url(url)
     self.new(object_hash).tap do |object|
-        object.save unless self.all.include?(object)
+        object.save
       end
   end
 

@@ -10,39 +10,28 @@ class GhibliDb::Person
   end
 
   def save
-    @@all << self
-  end
-
-  def add_films # confirm return value
-      if self.films
-        films_array = self.films
-        films_array = films_array.map do |film|
-          film = GhibliDb::Film.find_by_url(film) # updates person from url to person object
-        end
-        # people_array.map.with_index {|person,index| person.films[index] = self}
-        self.films = films_array
-      end
+    @@all << self unless @@all.include?(self)
   end
 
   def self.all
     @@all
   end
 
-  def self.create(object_hash)
-    object = self.new(object_hash)
+  def self.create(hash)
+    object = self.new(hash)
     object.save
   end
 
-  def self.find(object_hash)
-    self.all.detect {|object| object == object_hash}
+  def self.find(hash)
+    self.all.detect {|object| object == hash}
   end
 
   def self.find_or_create(hash)
     find(hash) || self.create(hash)
   end
 
-  def self.create_from_collection(array_of_urls)
-    array_of_urls.each do |url|
+  def self.create_from_collection(array)
+    array.each do |url|
       object = self.create_by_url(url)
       object.save
     end

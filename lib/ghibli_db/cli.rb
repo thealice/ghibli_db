@@ -3,8 +3,8 @@ class GhibliDb::CLI
   def start
     pastel
     welcome
-    GhibliDb::API.get_films
-    GhibliDb::API.get_people
+    make_films
+    make_people
     main_menu
   end
 
@@ -119,12 +119,13 @@ class GhibliDb::CLI
           puts pastel.yellow("-------------------")
           puts pastel.cyan("Featured Character:")
           puts pastel.yellow("-------------------")
-          gender = film.people[0]['gender'].downcase
-          species = film.people[0]['species'].downcase
+          person = film.people[0]
+          gender = person['gender'].downcase
+          species = person['species'].downcase
           if gender != "" && gender != "na"
-            puts "#{film.people[0]['name']}, a #{gender} #{species}"
+            puts "#{person['name']}, a #{gender} #{species}"
           else
-            puts "#{film.people[0]['name']}, a #{species}"
+            puts "#{person['name']}, a #{species}"
           end
 
         elsif film.people.size > 1
@@ -152,6 +153,14 @@ class GhibliDb::CLI
         puts pastel.cyan("This is not a valid number!")
         film_details
       end
+  end
+
+  def make_films
+    GhibliDb::API.get_films
+  end
+
+  def make_people
+    GhibliDb::API.get_people
   end
 
   def line_break
