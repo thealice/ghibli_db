@@ -117,15 +117,30 @@ class GhibliDb::CLI
           puts pastel.yellow("-------------------")
           puts pastel.cyan("Featured Character:")
           puts pastel.yellow("-------------------")
-          puts "#{film.people[0]['name']}"
+          gender = film.people[0]['gender'].downcase
+          species = film.people[0]['species'].downcase
+          if gender != ""
+            puts "#{film.people[0]['name']}, a #{gender} #{species}"
+          else
+            puts "#{film.people[0]['name']}, a #{species}"
+          end
+
         elsif film.people.size > 1
           puts pastel.yellow("--------------------")
           puts pastel.cyan("Featured Characters:")
           puts pastel.yellow("--------------------")
           film.people.each.with_index(1) do |person, index|
-            puts "#{index}. #{person['name']}"
+            gender = person['gender'].downcase
+            species = person['species'].downcase
+            if gender != ""
+              puts "#{index}. #{person['name']}, a #{gender} #{species}"
+            else
+              puts "#{index}. #{person['name']}, a #{species}"
+            end
+
           end
         else
+          line_break
           puts pastel.cyan("(ﾉ´ｰ`)ﾉ There are no featured characters in this film")
         end
 

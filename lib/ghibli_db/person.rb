@@ -37,7 +37,7 @@ class GhibliDb::Person
     self.all.detect {|object| object == object_hash}
   end
 
-  def self.find_or_create_hash(hash)
+  def self.find_or_create(hash)
     find(hash) || self.create(hash)
   end
 

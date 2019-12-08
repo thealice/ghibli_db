@@ -11,26 +11,19 @@ class GhibliDb::API
   def self.get_people
     results = HTTParty.get("#{BASE_URL}/people")
     people = results.parsed_response
-    people.map do |person| #person is a hash
-      id = person["id"]
-      name = person["name"]
-      gender = person["gender"]
-      age = person["age"]
-      eye_color = person["eye_color"]
-      hair_color = person["hair_color"]
-      person["films"] = person["films"].map do |url|
-        new_film = GhibliDb::Film.find_or_create_by_url(url)
+    people.map.with_index do |person| #person is a hash
+      species_hash = self.get_object_by_url(person["species"])
+      person["species"] = species_hash["name"] # this does not create a species object, just assigns the species name as an attribute of the person
+      person["films"] = person["films"].map do |film|
+        film = GhibliDb::Film.find_or_create_by_url(film) # replace urls with film objects
       end
-      new_person = GhibliDb::Person.find_or_create_hash(person) #person is a hash
+      new_person = GhibliDb::Person.find_or_create(person) #create people objects
     end
-    ## Is this doing anything????
-    people.map.with_index do |person_hash, index|
-      person_hash["films"].each do |film|
-        film.people << person_hash unless film.people.include?(person_hash)
+    people.each.with_index do |person, index|
+      person["films"].each do |film| # add people to films
+        film.people << person unless film.people.include?(person)
       end
     end
-    # people[index]["films"][index].people
-    people
   end
 
   def self.get_object_by_url(url)
