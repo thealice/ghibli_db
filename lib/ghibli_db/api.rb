@@ -8,7 +8,7 @@ class GhibliDb::API
     GhibliDb::Film.create_from_collection(results)
   end
 
-  def self.get_people
+  def self.get_people #this also creates people and adds people to films...should separate this out
     results = HTTParty.get("#{BASE_URL}/people")
     people = results.parsed_response
     people.map.with_index do |person| #person is a hash
