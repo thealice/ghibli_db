@@ -25,9 +25,9 @@ class GhibliDb::CLI
       input = gets.strip.downcase
       if input == "exit"
         goodbye
-      elsif input == "films" # add logic here to allow similar words
+      elsif input.match?(/fil|flim|movie|movies/i)
         list_films
-      elsif input == "people"
+      elsif input.match?(/peo|pepol/i)
         list_characters
       else
         puts pastel.cyan("This is not a valid option.")
