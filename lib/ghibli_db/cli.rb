@@ -27,11 +27,10 @@ class GhibliDb::CLI
         goodbye
       elsif input.match?(/fil|flim|movie|movies/i)
         list_films
-      elsif input.match?(/peo|pepol/i)
+      elsif input.match?(/peo|pepol|character|char/i)
         list_characters
       else
         puts pastel.cyan("This is not a valid option.")
-        main_menu
       end
     end
   end
